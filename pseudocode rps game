@@ -1,0 +1,37 @@
+1. get computer choice of rock, paper or scissors
+    rock can be number 1, paper number 2 and scissors number 3
+
+    with Math.random() and Math.floor() functions I will get
+    a random integer between 1 and 3 and choose the assigned symbol
+
+2. get user choice
+    same situation as above but reversed
+    user will input a string 'rock', 'paper' or 'scissors' and I will
+    compare user's choice with the computer choice
+
+@@@
+How to compare player and computer result?
+    If player choose rock and computer paper, how do I know that
+    computer has won?
+
+    I set matches for each sign, like:
+    rock = rock draw
+    rock > scissors
+    rock < paper
+
+    paper = paper draw
+    paper > rock
+    paper < scissors
+
+    scissors = scissors draw
+    scissors > paper
+    scissors < rock
+@@@
+
+3. print result
+    after comparing players choices I will type the winner and save
+    scores of players
+
+4. repeat for 5 rounds
+    whole match should last 5 rounds with the player who won more rounds
+    as a winner
