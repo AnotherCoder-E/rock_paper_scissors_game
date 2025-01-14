@@ -21,7 +21,7 @@ paperBtn.setAttribute('value', 'paper');
 paperBtn.innerText = 'Paper';
 scissorsBtn.setAttribute('value', 'scissors');
 scissorsBtn.innerText = 'Scissors';
-resultsDiv.innerText = 'T   E   S   T';
+resultsDiv.innerText = 'Press button to start the game';
 
 body.appendChild(header3);
 body.appendChild(header1);
@@ -35,6 +35,7 @@ const buttons = document.querySelectorAll('button');
 
 // DOM STYLES
 body.style.cssText = 'color: white; text-align: center;';
+
 resultsDiv.style.fontSize = '32px';
 
 // BUTTON STYLES
@@ -61,9 +62,9 @@ function getComputerChoice() {
 
 const playRound = (humanChoice, computerChoice) => {
 
-    console.log(`Round ${roundCounter}`);
-    console.log(`User chooses: ${humanChoice}`);
-    console.log(`Computer chooses: ${computerChoice}`);
+    resultsDiv.innerText = `Round ${roundCounter} 
+    User chooses: ${humanChoice} 
+    Computer chooses: ${computerChoice}`;
 
     // if ( humanChoice === null || humanChoice === '') {
     //     console.log('Invalid input');
@@ -71,19 +72,19 @@ const playRound = (humanChoice, computerChoice) => {
     // }
 
     if ( humanChoice === computerChoice) {
-        console.log('Draw! Player and computer choose the same sign.');
-        console.log(`Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`);
+        resultsDiv.innerText += `\nDraw! Player and computer choose the same sign.
+        Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`
     } else if ( humanChoice === 'rock' && computerChoice == 'scissors' ||
         humanChoice === 'paper' && computerChoice === 'rock' ||
         humanChoice === 'scissors' && computerChoice === 'paper'
     ) { 
-        console.log(`User won! User chose ${humanChoice} and computer chose ${computerChoice}.`);
+        resultsDiv.innerText += `\nUser won! User chose ${humanChoice} and computer chose ${computerChoice}.`;
         humanScore++;
-        console.log(`Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`);
+        resultsDiv.innerText += `\nScores table: \nUser - ${humanScore} \nComputer - ${computerScore}`;
     } else {
-        console.log(`Computer won! User chose ${humanChoice} and computer chose ${computerChoice}`);
+        resultsDiv.innerText += `\nComputer won! User chose ${humanChoice} and computer chose ${computerChoice}`;
         computerScore++;
-        console.log(`Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`);
+        resultsDiv.innerText += `\nScores table: \nUser - ${humanScore} \nComputer - ${computerScore}`;
     }
 
     roundCounter++;
