@@ -11,6 +11,8 @@ const rockBtn = document.createElement('button');
 const paperBtn = document.createElement('button');
 const scissorsBtn = document.createElement('button');
 const resultsDiv = document.createElement('div');
+const finalMsg = document.createElement('h1');
+const restartBtn = document.createElement('button');
 
 header3.innerText = 'Welcome in';
 header1.innerText = '\'Rock, Paper, Scissors\' \ngame';
@@ -22,6 +24,9 @@ paperBtn.innerText = 'Paper';
 scissorsBtn.setAttribute('value', 'scissors');
 scissorsBtn.innerText = 'Scissors';
 resultsDiv.innerText = 'Press button to start the game';
+finalMsg.innerText = `Game Over
+Press 'Restart' to play again.`;
+restartBtn.innerText = 'Restart';
 
 body.appendChild(header3);
 body.appendChild(header1);
@@ -37,11 +42,19 @@ const buttons = document.querySelectorAll('button');
 body.style.cssText = 'color: white; text-align: center;';
 
 resultsDiv.style.fontSize = '32px';
+resultsDiv.style.border = 'solid 2px white';
+resultsDiv.style.width = '500px';
+resultsDiv.style.margin = '50px auto';
+
+introduction.style.fontSize = '20px';
 
 // BUTTON STYLES
 buttons.forEach( function(button) {
     button.style.fontSize = '32px';
 });
+
+restartBtn.style.fontSize = '32px';
+
 
 // PROGRAM LOGIC
 let humanScore = 0;
@@ -60,92 +73,77 @@ function getComputerChoice() {
     }
 }
 
+function gameOver() {
+    buttons.forEach( (button) => {
+        button.remove();
+    
+
+        body.appendChild(finalMsg);
+        body.appendChild(restartBtn);
+    });
+}
+
 const playRound = (humanChoice, computerChoice) => {
 
     resultsDiv.innerText = `Round ${roundCounter} 
     User chooses: ${humanChoice} 
     Computer chooses: ${computerChoice}`;
 
-    // if ( humanChoice === null || humanChoice === '') {
-    //     console.log('Invalid input');
-    //     return;
-    // }
 
     if ( humanChoice === computerChoice) {
         resultsDiv.innerText += `\nDraw! Player and computer choose the same sign.
-        Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`
+        Scores table: \nUser: ${humanScore} \nComputer: ${computerScore}`
     } else if ( humanChoice === 'rock' && computerChoice == 'scissors' ||
         humanChoice === 'paper' && computerChoice === 'rock' ||
         humanChoice === 'scissors' && computerChoice === 'paper'
     ) { 
         resultsDiv.innerText += `\nUser won! User chose ${humanChoice} and computer chose ${computerChoice}.`;
         humanScore++;
-        resultsDiv.innerText += `\nScores table: \nUser - ${humanScore} \nComputer - ${computerScore}`;
+        resultsDiv.innerText += `\nScores table: \nUser: ${humanScore} \nComputer: ${computerScore}`;
     } else {
         resultsDiv.innerText += `\nComputer won! User chose ${humanChoice} and computer chose ${computerChoice}`;
         computerScore++;
-        resultsDiv.innerText += `\nScores table: \nUser - ${humanScore} \nComputer - ${computerScore}`;
+        resultsDiv.innerText += `\nScores table: \nUser: ${humanScore} \nComputer: ${computerScore}`;
     }
+
+    if ( humanScore === 5 || computerScore === 5 ) {
+
+        if ( humanScore === computerScore ) {
+            resultsDiv.innerText = `Draw!
+            Game last ${roundCounter} rounds. 
+            Scores table: \nUser: ${humanScore} \nComputer: ${computerScore}`;
+        } else if (humanScore > computerScore) {
+            resultsDiv.innerText = `User won the game!
+            Game last ${roundCounter} rounds. 
+            Scores table: \nUser: ${humanScore} \nComputer: ${computerScore}`;
+        } else {
+            resultsDiv.innerText = `Computer won the game!
+            Game last ${roundCounter} rounds. 
+            Scores table: \nUser: ${humanScore} \nComputer: ${computerScore}`;
+        }
+        return gameOver();
+    
+}
 
     roundCounter++;
 }
 
-// rockBtn.addEventListener('click', () => console.log('rock') );
+function restart() {
+    humanScore = 0;
+    computerScore = 0;
+    roundCounter = 1;
 
+    resultsDiv.innerText = 'Press button to start the game';
+    finalMsg.remove();
+    restartBtn.remove();
+
+    body.insertBefore( rockBtn, resultsDiv);
+    body.insertBefore( paperBtn, resultsDiv);
+    body.insertBefore( scissorsBtn, resultsDiv);
+    
+}
 
 rockBtn.addEventListener('click', () => playRound( rockBtn.value, getComputerChoice() ) );
 paperBtn.addEventListener('click',  () => playRound( paperBtn.value, getComputerChoice() ) );
 scissorsBtn.addEventListener('click', () => playRound( scissorsBtn.value, getComputerChoice() ) );
-
-// BUTTON EVENT LISTENERS
-// buttons.forEach( function(button) {
-//     button.addEventListener('click', playRound( button.value, getComputerChoice() ) );
-// });
-
-// Original User Input Function
-// const getHumanChoice = function() {
-//     const humanChoice = prompt('Let\'s play \'rock, paper, scissors\'! \nChoose your sign:').toLowerCase();
-
-//     if ( humanChoice === null || humanChoice === '') {
-//         alert('You didn\'t pass a value. Try again!');
-//     } else if ( humanChoice === 'rock' ) {
-//         alert(`You choose ${humanChoice}`);
-//     } else if ( humanChoice === 'paper') {
-//         alert(`You choose ${humanChoice}`);
-//     } else if ( humanChoice === 'scissors') {
-//         alert(`You choose ${humanChoice}`);
-//     } else {
-//         alert('You didn\'t choose a right sign. Try again!');
-//     }
-
-//     return humanChoice;
-// }
-
-// getHumanChoice()
-
-
-// playRound(getHumanChoice(), getComputerChoice());
-
-// function playGame() {
-
-//         // Disabled for now
-//         // playRound(getHumanChoice(), getComputerChoice() );
-//         // playRound(getHumanChoice(), getComputerChoice() );
-//         // playRound(getHumanChoice(), getComputerChoice() );
-//         // playRound(getHumanChoice(), getComputerChoice() );
-//         // playRound(getHumanChoice(), getComputerChoice() );
-
-//         if ( humanScore === computerScore ) {
-//             console.log(`Draw!`)
-//             console.log(`Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`);
-//         } else if (humanScore > computerScore) {
-//             console.log(`User won the game!`);
-//             console.log(`Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`);
-//         } else {
-//             console.log(`Comuter won the game!`);
-//             console.log(`Scores table: \nUser - ${humanScore} \nComputer - ${computerScore}`);
-//         }
-// }
-
-// playGame();
-
+restartBtn.addEventListener('click', restart );
